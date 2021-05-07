@@ -1,0 +1,8 @@
+# npm
+node_modules/
+
+# tree-sitter targets
+src/
+*.gyp
+*.wasm
+index.js

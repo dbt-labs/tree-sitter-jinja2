@@ -4,7 +4,7 @@
 //! tree-sitter [Parser][], and then use the parser to parse some code:
 //!
 //! ```
-//! let code = "";
+//! let code = "This text supports {{ 'jinja' }}.";
 //! let mut parser = tree_sitter::Parser::new();
 //! parser.set_language(tree_sitter_jinja2::language()).expect("Error loading jinja2 grammar");
 //! let tree = parser.parse(code, None).unwrap();

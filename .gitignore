@@ -2,7 +2,6 @@
 node_modules/
 
 # tree-sitter targets
-src/
 *.gyp
 *.wasm
 index.js
@@ -18,3 +17,7 @@ bindings/python3/dist
 *.whl
 __pycache__/
 *.py[cod]
+
+# rust binding targets
+Cargo.lock
+target/

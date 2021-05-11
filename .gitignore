@@ -6,3 +6,7 @@ src/
 *.gyp
 *.wasm
 index.js
+
+# python binding targets
+bindings/python3/build/
+bindings/python3/dist/

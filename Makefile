@@ -13,6 +13,13 @@ install:
 build: install
 	npx tree-sitter generate
 
+# build bindings
+.PHONY: bindings
+bindings: build
+	# python3 ./bindings/python3/build.py
+	cd ./bindings/python3/ \
+	&& python3 setup.py bdist_wheel
+
 # runs the tree-sitter unit tests and python unit tests
 .PHONY: test
 test: build
@@ -33,4 +40,5 @@ clean:
 	rm -rf build/
 	rm -rf src/
 	rm -f Cargo.toml
+	rm -rf bindings/python3/build/
 	

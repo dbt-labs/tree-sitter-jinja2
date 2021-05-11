@@ -15,7 +15,7 @@ setup(
     ],
     ext_modules=[
         Extension(
-            "dbt_jinja",
+            "dbt_parser",
             ["src/parser.c"],
             extra_compile_args=(
                 ["-std=c99", "-fPIC"] if system() != "Windows" else None

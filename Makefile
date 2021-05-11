@@ -4,14 +4,19 @@
 all: build
 
 # installs npm dependencies
+grammar/node_modules/tree-sitter-cli/tree-sitter/:
+	cd grammar \
+	&& npm install
+
+# alias
 .PHONY: install
-install:
-	npm install
+install: grammar/node_modules/tree-sitter-cli/tree-sitter/
 
 # build tree-sitter
 .PHONY: build
 build: install
-	npx tree-sitter generate
+	cd grammar \
+	&& npx tree-sitter generate
 
 # build bindings
 .PHONY: bindings
@@ -23,22 +28,24 @@ bindings: build
 # runs the tree-sitter unit tests and python unit tests
 .PHONY: test
 test: build
-	npx tree-sitter test
+	cd grammar \
+	&& npx tree-sitter test
 
 # docker must be running. build-wasm stage will print that error though
 .PHONY: build
 demo: build
-	npx tree-sitter build-wasm
-	npx tree-sitter web-ui
+	cd grammar \
+	&& npx tree-sitter build-wasm \
+	&& npx tree-sitter web-ui
 
 .PHONY: clean
 clean:
-	rm -rf node_modules/
-	rm -f index.js
+	rm -rf grammar/node_modules/
+	rm -f grammar/index.js
+	rm -rf grammar/src/
+	rm -rf grammar/build/
 	find . -type f -name '*.wasm' -delete
 	find . -type f -name '*.gyp' -delete
-	rm -rf build/
-	rm -rf src/
 	rm -f Cargo.toml
 	rm -rf bindings/python3/build/
 	

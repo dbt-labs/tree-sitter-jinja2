@@ -11,6 +11,6 @@ index.js
 bindings/python3/build/
 bindings/python3/dbt_parser/dist/
 bindings/python3/include/*.c
-bindings/python3/include/*.h
+bindings/python3/include/tree_sitter/
 *.egg-info
 *.whl

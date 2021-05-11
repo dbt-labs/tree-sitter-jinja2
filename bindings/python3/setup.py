@@ -16,7 +16,7 @@ setup(
     ext_modules=[
         Extension(
             "dbt_parser",
-            ["./tree_sitter/parser.c"],
+            ["./include/parser.c"],
             extra_compile_args=(
                 ["-std=c99", "-fPIC"] if system() != "Windows" else None
             ),

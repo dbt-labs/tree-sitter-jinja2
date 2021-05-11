@@ -21,7 +21,8 @@ build: install
 # build bindings
 .PHONY: bindings
 bindings: build
-	# python3 ./bindings/python3/build.py
+	cp ./grammar/src/parser.c bindings/python3/include/
+	cp -r ./grammar/src/tree_sitter bindings/python3/include/
 	cd ./bindings/python3/ \
 	&& python3 setup.py bdist_wheel
 
@@ -48,4 +49,7 @@ clean:
 	find . -type f -name '*.gyp' -delete
 	rm -f Cargo.toml
 	rm -rf bindings/python3/build/
+	rm -rf bindings/python3/include/*
+	rm -rf bindings/python3/dbt_parser/dist/
+	rm -rf bindings/python3/dbt_parser.egg-info/
 	

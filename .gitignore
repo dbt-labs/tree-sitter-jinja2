@@ -9,4 +9,8 @@ index.js
 
 # python binding targets
 bindings/python3/build/
-bindings/python3/dist/
+bindings/python3/dbt_parser/dist/
+bindings/python3/include/*.c
+bindings/python3/include/*.h
+*.egg-info
+*.whl

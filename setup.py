@@ -1,8 +1,12 @@
+# this cannot be built or installed locally. See the readme for
+# instructions on how to install from pypi.
+
+import os
 from platform import system
 from setuptools import Extension, setup
-# you can run `python setup.py bdist_wheel` on different different
-# distributions and setuptools will take care of creating wheels (compiled
-# python package) this could then be installed from PyPI
+
+# specific to build tool:
+PYTHON_BINDING_PATH = os.environ['PYTHON_BINDING_PATH']
 
 setup(
     name="tree-sitter-jinja2",
@@ -16,7 +20,7 @@ setup(
     ext_modules=[
         Extension(
             "tree-sitter-jinja2",
-            ["{project}/bindings/python3/include/parser.c"],
+            [f"{PYTHON_BINDING_PATH}/include/parser.c"],
             extra_compile_args=(
                 ["-std=c99", "-fPIC"] if system() != "Windows" else None
             ),

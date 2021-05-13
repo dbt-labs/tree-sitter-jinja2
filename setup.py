@@ -16,7 +16,7 @@ setup(
     ext_modules=[
         Extension(
             "tree-sitter-jinja2",
-            ["./include/parser.c"],
+            ["./tree-sitter-jinja2/include/parser.c"],
             extra_compile_args=(
                 ["-std=c99", "-fPIC"] if system() != "Windows" else None
             ),

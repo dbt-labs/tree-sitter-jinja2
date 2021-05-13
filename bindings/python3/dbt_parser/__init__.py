@@ -12,6 +12,3 @@ so_file = next(
 )
 
 JINJA2_LANGUAGE = Language('build/dbt_jinja.so', 'dbt_jinja')
-
-parser = Parser()
-parser.set_language(JINJA2_LANGUAGE)

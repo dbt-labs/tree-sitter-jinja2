@@ -20,7 +20,7 @@ jobs:
         env:
           CIBW_BEFORE_ALL: make build
           CIBW_BEFORE_ALL_LINUX: yum install -y npm
-          CIBW_ENVIRONMENT: 'RELATIVE_PATH="/bindings/python3" CURRENT_PATH=$(pwd); ABC="${CURRENT_PATH}${RELATIVE_PATH}";"RELATIVE_PATH='/bindings/python3" CURRENT_PATH=$(pwd); PYTHON_BINDING_PATH="${CURRENT_PATH}${RELATIVE_PATH}';
+          CIBW_ENVIRONMENT: 'RELATIVE_PATH="/bindings/python3" CURRENT_PATH=$(pwd); ABC="${CURRENT_PATH}${RELATIVE_PATH}";"RELATIVE_PATH='/bindings/python3" CURRENT_PATH=$(pwd); PYTHON_BINDING_PATH="${CURRENT_PATH}${RELATIVE_PATH}'
 
       - uses: actions/upload-artifact@v2
         with:

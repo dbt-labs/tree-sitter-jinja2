@@ -16,7 +16,7 @@ setup(
     ext_modules=[
         Extension(
             "tree-sitter-jinja2",
-            ["./bindings/python3/include/parser.c"],
+            ["{project}/bindings/python3/include/parser.c"],
             extra_compile_args=(
                 ["-std=c99", "-fPIC"] if system() != "Windows" else None
             ),

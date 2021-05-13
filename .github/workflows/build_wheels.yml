@@ -1,26 +1,27 @@
-# https://cibuildwheel.readthedocs.io/en/1.x/setup/    
-
-name: Build
+name: tree-sitter-jinja2
 
 on: [push, pull_request]
 
 jobs:
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
+  build:
+
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-2019, macos-10.15]
+        python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Build wheels
-        uses: joerick/cibuildwheel@v1.11.0
-        env:
-          CIBW_BEFORE_ALL: make build
-          CIBW_BEFORE_ALL_LINUX: yum install -y npm && RELATIVE_PATH='/bindings/python3' CURRENT_PATH=$(pwd) && ABC='${CURRENT_PATH}${RELATIVE_PATH}' && RELATIVE_PATH='/bindings/python3' CURRENT_PATH=$(pwd) && PYTHON_BINDING_PATH='${CURRENT_PATH}${RELATIVE_PATH}'
-          
-      - uses: actions/upload-artifact@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
         with:
-          path: ./wheelhouse/*.whl
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          yum install -y npm
+          make install
+      - name: Build tree-sitter
+        run: make build
+      - name: Build bindings
+        run: make bindings

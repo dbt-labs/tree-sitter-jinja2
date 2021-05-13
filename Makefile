@@ -7,9 +7,10 @@ all: build
 node_modules/tree-sitter-cli/tree-sitter/:
 	npm install
 
-# alias
 .PHONY: install
 install: node_modules/tree-sitter-cli/tree-sitter/
+	pip install --upgrade pip
+	pip install wheel
 
 # build tree-sitter
 .PHONY: build

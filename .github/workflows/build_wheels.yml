@@ -22,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          apt-get install -y npm
+          sudo apt-get install -y npm
           make install
       - name: Build tree-sitter
         run: make build

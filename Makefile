@@ -50,6 +50,6 @@ clean:
 	rm -f Cargo.toml
 	rm -rf bindings/python3/build/
 	rm -rf bindings/python3/include/*
-	rm -rf bindings/python3/dbt_parser/dist/
-	rm -rf bindings/python3/dbt_parser.egg-info/
+	rm -rf bindings/python3/tree-sitter-jinja2/dist/
+	rm -rf bindings/python3/tree-sitter-jinja2.egg-info/
 	

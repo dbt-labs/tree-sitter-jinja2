@@ -8,7 +8,7 @@ tree-sitter-jinja2
 ```
 
 ```python
-from dbt_parser import JINJA2_LANGUAGE
+from tree-sitter-jinja2 import JINJA2_LANGUAGE
 from tree_sitter import Parser
 
 source = bytes("{{ True }}", "utf8")

@@ -8,7 +8,7 @@ so_file = next(
     os.path.join(directory, filename)
     for directory in sitepackages
     for filename in os.listdir(directory)
-    if filename.startswith("dbt_jinja.") and filename.endswith(".so")
+    if filename.startswith("tree-sitter-jinja2.") and filename.endswith(".so")
 )
 
-JINJA2_LANGUAGE = Language('build/dbt_jinja.so', 'dbt_jinja')
+JINJA2_LANGUAGE = Language('build/tree-sitter-jinja2.so', 'tree-sitter-jinja2')

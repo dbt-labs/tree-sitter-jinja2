@@ -5,17 +5,17 @@ from setuptools import Extension, setup
 # python package) this could then be installed from PyPI
 
 setup(
-    name="dbt_parser",
+    name="tree-sitter-jinja2",
     version="0.0.1",
     platforms=["any"],
     python_requires=">=3.6",
-    packages=["dbt_parser"],
+    packages=["tree-sitter-jinja2"],
     install_requires=[
         'tree_sitter'
     ],
     ext_modules=[
         Extension(
-            "dbt_parser",
+            "tree-sitter-jinja2",
             ["./include/parser.c"],
             extra_compile_args=(
                 ["-std=c99", "-fPIC"] if system() != "Windows" else None

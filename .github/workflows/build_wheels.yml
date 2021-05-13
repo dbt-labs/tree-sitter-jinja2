@@ -8,8 +8,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2019, macos-10.15]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        # os: [ubuntu-20.04, windows-2019, macos-10.15]
+        # python-version: [3.6, 3.7, 3.8, 3.9]
+        # just while debugging:
+        os: [ubuntu-20.04]
+        python-version: [3.8
 
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          yum install -y npm
+          apt-get install -y npm
           make install
       - name: Build tree-sitter
         run: make build

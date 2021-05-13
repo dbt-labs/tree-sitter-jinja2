@@ -1,12 +1,6 @@
-# this cannot be built or installed locally. See the readme for
-# instructions on how to install from pypi.
-
 import os
 from platform import system
 from setuptools import Extension, setup
-
-# specific to build tool:
-PYTHON_BINDING_PATH = os.environ['PYTHON_BINDING_PATH']
 
 setup(
     name="tree-sitter-jinja2",
@@ -20,7 +14,7 @@ setup(
     ext_modules=[
         Extension(
             "tree-sitter-jinja2",
-            [f"{PYTHON_BINDING_PATH}/include/parser.c"],
+            ["./bindings/python3/include/parser.c"],
             extra_compile_args=(
                 ["-std=c99", "-fPIC"] if system() != "Windows" else None
             ),

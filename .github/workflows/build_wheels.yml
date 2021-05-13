@@ -17,6 +17,8 @@ jobs:
 
       - name: Build wheels
         uses: joerick/cibuildwheel@v1.11.0
+        env:
+          CIBW_BEFORE_ALL: make build
 
       - uses: actions/upload-artifact@v2
         with:

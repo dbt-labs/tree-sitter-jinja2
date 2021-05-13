@@ -20,6 +20,7 @@ jobs:
         env:
           CIBW_BEFORE_ALL: make build
           CIBW_BEFORE_ALL_LINUX: yum install -y npm
+          CIBW_ENVIRONMENT: "PIP_NO_BUILD_ISOLATION=1"
 
       - uses: actions/upload-artifact@v2
         with:

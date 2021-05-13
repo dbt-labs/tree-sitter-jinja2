@@ -11,7 +11,7 @@ setup(
     python_requires=">=3.6",
     packages=["tree-sitter-jinja2"],
     install_requires=[
-        'tree_sitter'
+        'tree_sitter==0.19.0'
     ],
     ext_modules=[
         Extension(

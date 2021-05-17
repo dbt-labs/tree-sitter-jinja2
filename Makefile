@@ -85,11 +85,9 @@ build: install
 .PHONY: bindings
 bindings: build
 	$(L)$(LS) src
-	$(L)$(LS) bindings$(PATHSEP)
-	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)
-	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include
 	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
-	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
+	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include
+	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(CPR) ./src/tree_sitter bindings/python3/include/
 	$(L)python3 setup.py bdist_wheel
 

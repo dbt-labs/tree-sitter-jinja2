@@ -84,7 +84,9 @@ build: install
 .PHONY: bindings
 bindings: build
 	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
+	$(L)$(LS) bindingsbindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(RENAME) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree-sitter-jinja2.c
+	$(L)$(LS) bindingsbindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 	$(L)python3 setup.py bdist_wheel

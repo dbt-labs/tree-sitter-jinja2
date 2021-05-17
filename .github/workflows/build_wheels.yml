@@ -28,6 +28,8 @@ jobs:
         run: make install LOG=true
       - name: Build tree-sitter
         run: make build LOG=true
+      - name: Test tree-sitter
+        run: make test LOG=true
       - name: Build bindings
         run: make bindings LOG=true
       - name: Cache wheel for distribution

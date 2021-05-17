@@ -57,7 +57,7 @@ endif
 
 # system agnostic cat
 ifdef ComSpec
-	RENAME=ren
+	RENAME=C:\usr\bin\ren
 else
     RENAME=mv
 endif

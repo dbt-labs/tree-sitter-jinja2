@@ -26,7 +26,6 @@ define rm_all
     $(if $(ComSpec), del /S /Q $(1), find . -type f -name '$(1)' -delete)
 endef
 
-
 # system agnostic cp
 ifdef ComSpec
     CP=copy /Y
@@ -56,6 +55,13 @@ else
 endif
 PATHSEP=$(strip $(PATHSEP2))
 
+# system agnostic ls (mostly for debugging the makefile)
+ifdef ComSpec
+    LS=dir
+else
+    LS=ls
+endif
+
 
 # without args just build the project
 .PHONY: all
@@ -78,6 +84,7 @@ build: install
 # build bindings
 .PHONY: bindings
 bindings: build
+	$(L)$(LS) src
 	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(CPR) ./src/tree_sitter bindings/python3/include/
 	$(L)python3 setup.py bdist_wheel

@@ -9,11 +9,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        # commenting out windows for now
         # os: [ubuntu-18.04, ubuntu-20.04, macos-10.15, windows-2016, windows-2019]
-        # python-version: [3.6, 3.7, 3.8, 3.9]
-        # debugging only:
-        os: [windows-2019]
-        python-version: [3.8]
+        os: [ubuntu-18.04, ubuntu-20.04, macos-10.15]
+        python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
       - uses: actions/checkout@v2

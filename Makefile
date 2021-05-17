@@ -33,13 +33,6 @@ else
     CP=cp
 endif 
 
-# system agnostic cp -r
-ifdef ComSpec
-    CPR=xcopy /S /E /H
-else
-    CPR=cp -r
-endif 
-
 # system agnostic command seprator
 ifdef ComSpec
     CMDSEP=&

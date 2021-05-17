@@ -85,7 +85,7 @@ build: install
 bindings: build
 	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
-	$(L)$(MV) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree-sitter-jinja2.c
+	$(L)$(CP) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree-sitter-jinja2.c
 	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)

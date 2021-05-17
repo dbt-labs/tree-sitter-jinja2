@@ -1,6 +1,6 @@
 name: tree-sitter-jinja2
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
 

@@ -35,7 +35,7 @@ endif
 
 # system agnostic cp -r
 ifdef ComSpec
-    CPR=xcopy /E /H
+    CPR=xcopy /S /E /H
 else
     CPR=cp -r
 endif 
@@ -84,11 +84,8 @@ build: install
 # build bindings
 .PHONY: bindings
 bindings: build
-	$(L)$(LS) src
-	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
-	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
-	$(L)$(CPR) ./src/tree_sitter bindings/python3/include/
+	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)* bindings/python3/include/
 	$(L)python3 setup.py bdist_wheel
 
 # runs the tree-sitter unit tests and python unit tests

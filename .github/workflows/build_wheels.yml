@@ -4,47 +4,26 @@ on: [push, pull_request]
 
 jobs:
 
-  build-linux:
+  build:
 
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-18.04, ubuntu-20.04, macos-10.15, windows-2016, windows-2019]
         python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Setup npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: |
-          sudo apt-get install -y npm
-          make install
-      - name: Build tree-sitter
-        run: make build
-      - name: Build bindings
-        run: make bindings
-
-  build-mac:
-
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-10.15]
-        python-version: [3.6, 3.7, 3.8, 3.9]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          brew install node
-          make install
+        run: make install
       - name: Build tree-sitter
         run: make build
       - name: Build bindings

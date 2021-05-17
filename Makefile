@@ -28,7 +28,7 @@ endef
 
 # system agnostic cp
 ifdef ComSpec
-    CP=copy /Y
+    CP=xcopy /R /H /Y
 else
     CP=cp
 endif 
@@ -86,7 +86,7 @@ build: install
 bindings: build
 	$(L)$(LS) src
 	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
-	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include
+	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(LS) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(CPR) ./src/tree_sitter bindings/python3/include/
 	$(L)python3 setup.py bdist_wheel

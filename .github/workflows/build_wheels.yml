@@ -30,6 +30,23 @@ jobs:
         run: make build LOG=true
       - name: Build bindings
         run: make bindings LOG=true
+      - name: Cache wheel for distribution
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}-${{ matrix.python-version }}
+          path: dist/*.whl
+          retention-days: 5
+
+  publish:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Fetch wheels from cache
+        uses: actions/download-artifact@v2
+      - name: Gather wheels
+        run: |
+          mkdir dist/
+          find . -type f -name '*.whl' -exec mv -i '{}' ./dist/ ';'
       - name: Publish distribution 📦 to Test PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:

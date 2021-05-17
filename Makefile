@@ -55,6 +55,12 @@ else
     LS=ls
 endif
 
+# system agnostic file rename
+ifdef ComSpec
+    RENAME=rename
+else
+    RENAME=mv
+endif
 
 # without args just build the project
 .PHONY: all
@@ -77,7 +83,8 @@ build: install
 # build bindings
 .PHONY: bindings
 bindings: build
-	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree-sitter-jinja2.c
+	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
+	$(L)$(RENAME) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree-sitter-jinja2.c
 	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 	$(L)python3 setup.py bdist_wheel

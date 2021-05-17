@@ -57,7 +57,7 @@ endif
 
 # system agnostic file rename
 ifdef ComSpec
-    RENAME=rename
+    RENAME=ren
 else
     RENAME=mv
 endif

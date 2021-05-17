@@ -85,7 +85,7 @@ build: install
 .PHONY: bindings
 bindings: build
 	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
-	$(L)$(CPR) src$(PATHSEP)tree_sitter$(PATHSEP)* bindings/python3/include/
+	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)python3 setup.py bdist_wheel
 
 # runs the tree-sitter unit tests and python unit tests

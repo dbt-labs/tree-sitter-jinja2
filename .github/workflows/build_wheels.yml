@@ -45,10 +45,6 @@ jobs:
     steps:
       - name: Fetch wheels from cache
         uses: actions/download-artifact@v2
-      - name: Gather wheels
-        run: |
-          mkdir dist/
-          find . -type f -name '*.whl' -exec mv -i '{}' ./dist/ ';'
       - name: Publish distribution 📦 to Test PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:

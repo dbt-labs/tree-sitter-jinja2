@@ -8,7 +8,7 @@ tree-sitter-jinja2
 ```
 
 ```python
-from tree-sitter-jinja2 import JINJA2_LANGUAGE
+from tree_sitter_jinja2 import JINJA2_LANGUAGE
 from tree_sitter import Parser
 
 source = bytes("{{ True }}", "utf8")

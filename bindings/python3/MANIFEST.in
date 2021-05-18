@@ -1,0 +1,3 @@
+include pyproject.toml
+include include/*.c
+include include/tree_sitter/*.h

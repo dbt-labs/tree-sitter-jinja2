@@ -80,7 +80,7 @@ node_modules/tree-sitter-cli/tree-sitter/:
 .PHONY: install
 install: node_modules/tree-sitter-cli/tree-sitter/
 	$(L)pip install --upgrade pip
-	$(L)pip install wheel
+	$(L)pip install wheel setuptools-dso==2.0a1
 
 # build tree-sitter
 .PHONY: build
@@ -95,7 +95,7 @@ prebindings: build
 # build bindings
 .PHONY: bindings
 bindings: prebindings
-	$(L)cd bindings$(PATHSEP)python3 $(CMDSEP) python3 setup.py bdist_wheel
+	$(L)cd bindings$(PATHSEP)python3 $(CMDSEP) python setup.py bdist_wheel
 
 # runs the tree-sitter unit tests and python unit tests
 .PHONY: test

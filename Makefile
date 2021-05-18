@@ -42,7 +42,7 @@ endif
 
 # system agnostic path separators
 ifdef ComSpec
-    PATHSEP2=\\
+    PATHSEP2=\
 else
     PATHSEP2=/
 endif

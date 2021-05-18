@@ -13,7 +13,7 @@ setup(
     ],
     ext_modules=[
         Extension(
-            "tree-sitter-jinja2",
+            "tree-sitter-jinja2-ext",
             [os.path.abspath("include/tree_sitter_jinja2.c")],
             [os.path.abspath("include")],
             extra_compile_args=(

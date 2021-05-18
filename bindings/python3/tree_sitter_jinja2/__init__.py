@@ -8,7 +8,7 @@ so_file = next(
     os.path.join(directory, filename)
     for directory in sitepackages if os.path.exists(directory)
     for filename in os.listdir(directory)
-    if filename.startswith("tree-sitter-jinja2.") and filename.endswith(".so")
+    if filename.startswith("tree-sitter-jinja2-ext.") and filename.endswith(".so")
 )
 
 JINJA2_LANGUAGE = Language(so_file, 'jinja2')

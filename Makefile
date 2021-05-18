@@ -111,6 +111,7 @@ clean:
 	$(L)$(RMF) Cargo.toml
 	$(L)$(RMRF) build
 	$(L)$(RMRF) bindings$(PATHSEP)python3$(PATHSEP)include
+	$(L)$(RMRF) bindings$(PATHSEP)python3$(PATHSEP)dist
 	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include
 	$(L)echo # > bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP).gitignore
 	

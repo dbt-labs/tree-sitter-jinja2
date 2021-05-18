@@ -90,10 +90,7 @@ build: install
 # prepare to build bindings
 .PHONY: prebindings
 prebindings: build
-	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
-	$(L)$(CAT) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)parser.c > bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter_jinja2.c
-	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
-	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
+	$(L)$(CAT) src$(PATHSEP)parser.c > bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter_jinja2.c $(CMDSEP) mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP) $(CMDSEP) $(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 
 # build bindings
 .PHONY: bindings

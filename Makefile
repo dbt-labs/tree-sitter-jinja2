@@ -80,13 +80,17 @@ install: node_modules/tree-sitter-cli/tree-sitter/
 build: install
 	$(L)npx tree-sitter generate
 
-# build bindings
-.PHONY: bindings
-bindings: build
+# prepare to build bindings
+.PHONY: prebindings
+prebindings: build
 	$(L)$(CP) src$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)
 	$(L)$(RENAME) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter_jinja2.c
 	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
+
+# build bindings
+.PHONY: bindings
+bindings: prebindings
 	$(L)cd bindings$(PATHSEP)python3 $(CMDSEP) python3 setup.py bdist_wheel
 
 # runs the tree-sitter unit tests and python unit tests

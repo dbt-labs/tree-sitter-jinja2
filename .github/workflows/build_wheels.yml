@@ -37,6 +37,7 @@ jobs:
         os: [ubuntu-20.04]
         python-version: [3.8]
     steps:
+      - uses: actions/checkout@v2
       - name: Build manylinux Python wheels
         uses: RalfG/python-wheels-manylinux-build@v0.3.4-manylinux2010_x86_64
         with:
@@ -58,6 +59,7 @@ jobs:
         os: [macos-10.15]
         python-version: [3.8]
     steps:
+      - uses: actions/checkout@v2
       - name: Build bindings
         run: make bindings LOG=true
       - name: Cache wheel for distribution

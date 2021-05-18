@@ -87,7 +87,7 @@ bindings: build
 	$(L)$(RENAME) bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)parser.c bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter_jinja2.c
 	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 	$(L)$(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
-	$(L)python3 setup.py bdist_wheel
+	$(L)cd bindings$(PATHSEP)python3 $(CMDSEP) python3 setup.py bdist_wheel
 
 # runs the tree-sitter unit tests and python unit tests
 .PHONY: test

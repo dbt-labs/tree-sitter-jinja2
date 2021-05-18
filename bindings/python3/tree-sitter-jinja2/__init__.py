@@ -11,4 +11,4 @@ so_file = next(
     if filename.startswith("tree-sitter-jinja2.") and filename.endswith(".so")
 )
 
-JINJA2_LANGUAGE = Language('build/tree-sitter-jinja2.so', 'tree-sitter-jinja2')
+JINJA2_LANGUAGE = Language(so_file, 'tree-sitter-jinja2')

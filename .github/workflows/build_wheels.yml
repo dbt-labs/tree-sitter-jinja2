@@ -58,4 +58,4 @@ jobs:
         env:
           TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
-        run: twine check dist/* && twine upload --repository testpypi --non-interactive dist/*
+        run: twine check dist/* && twine upload --repository-url https://test.pypi.org/legacy/ --non-interactive dist/*

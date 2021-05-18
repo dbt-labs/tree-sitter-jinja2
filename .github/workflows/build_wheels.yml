@@ -49,8 +49,13 @@ jobs:
         run: |
           mkdir dist/
           find . -type f -name '*.whl' -exec mv -i '{}' ./dist/ ';'
-      - name: Publish distribution 📦 to Test PyPI
-        uses: pypa/gh-action-pypi-publish@master
+
+      - uses: actions/setup-python@v2
         with:
-          password: ${{ secrets.FAKE }} # ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
+          python-version: "3.8"
+      - run: pip install wheel twine
+      - name: Publish distribution 📦 to Test PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: twine check dist/* && twine upload --repository testpypi --non-interactive dist/*

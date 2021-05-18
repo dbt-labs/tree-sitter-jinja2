@@ -31,24 +31,36 @@ jobs:
 
   build-manylinux:
     needs: [test]
-    runs-on: ${{ matrix.os }}
+    name: Build linux-py${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    container: quay.io/pypa/manylinux2010_x86_64
     strategy:
       matrix:
-        os: [macos-10.15]
-        python-version: [3.8]
+        python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
-      - name: Build manylinux Python wheels
-      uses: RalfG/python-wheels-manylinux-build@v0.3.4-manylinux2010_x86_64
-      with:
-        python-versions: 'cp36-cp36m cp37-cp37m'
-        build-requirements: 'cython numpy'
-        package-path: 'bindings/python3/'
-      - name: Cache wheel for distribution
-        uses: actions/upload-artifact@v2
+      - uses: actions/checkout@v1
+      - name: Updating path
+        run: |
+          echo "/opt/python/cp35-cp35m/bin/" >> $GITHUB_PATH
+          echo "/opt/python/cp36-cp36m/bin/" >> $GITHUB_PATH
+          echo "/opt/python/cp37-cp37m/bin/" >> $GITHUB_PATH
+          echo "/opt/python/cp38-cp38/bin/" >> $GITHUB_PATH
+          echo "/opt/python/cp39-cp39/bin/" >> $GITHUB_PATH
+      - name: Display Python version
+        run: python${{ matrix.python-version }} -c "import sys; print(sys.version)"
+      - name: Upgrade setuptools and pip
+        run: python${{ matrix.python-version }} -m pip install -U setuptools pip
+      - name: Generate wheel
+        run: python${{ matrix.python-version }} -m pip wheel -v -w dist_tmp --no-deps bindings/python3
+      - name: Run auditwheel
+        run: auditwheel repair --plat manylinux2014_x86_64 dist_tmp/tree_sitter_jinja2*.whl -w dist
+      - name: Show wheels generated
+        run: ls -lh dist
+      - uses: actions/upload-artifact@v1
         with:
-          name: ${{ matrix.os }}-${{ matrix.python-version }}
-          path: bindings/python3/dist/*.whl
-          retention-days: 5
+          name: linux_py${{ matrix.python-version }}
+          path: dist/
+          retension-days: 5
 
   build-mac:
     needs: [test]

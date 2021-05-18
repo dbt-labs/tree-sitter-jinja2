@@ -38,6 +38,8 @@ jobs:
         python-version: [3.8]
     steps:
       - uses: actions/checkout@v2
+      - name: Prepare to build bindings
+        run: make prebindings LOG=true
       - name: Build manylinux Python wheels
         uses: RalfG/python-wheels-manylinux-build@v0.3.4-manylinux2010_x86_64
         with:

@@ -49,7 +49,6 @@ jobs:
         run: |
           mkdir dist/
           find . -type f -name '*.whl' -exec mv -i '{}' ./dist/ ';'
-
       - uses: actions/setup-python@v2
         with:
           python-version: "3.8"

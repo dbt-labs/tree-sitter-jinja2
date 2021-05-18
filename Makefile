@@ -42,8 +42,7 @@ endif
 
 # system agnostic path separators
 ifdef ComSpec
-    set sep=\\
-	$(PATHSEP2)= %sep:~0,-1%
+    PATHSEP2=\\
 else
     PATHSEP2=/
 endif

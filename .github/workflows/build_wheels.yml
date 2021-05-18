@@ -51,7 +51,7 @@ jobs:
           path: bindings/python3/dist/*-manylinux*.whl
           retention-days: 5
 
-  build-mac-windows:
+  build-mac:
     needs: [test]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -69,8 +69,32 @@ jobs:
           path: bindings/python3/dist/*.whl
           retention-days: 5
 
+  build-windows:
+    needs: [test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2019]
+        python-version: [3.8]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare to build bindings
+        run: make build LOG=true
+      - name: Build bindings
+        run: |
+          type src\parser.c > bindings\python3\include\tree_sitter_jinja2.c
+          mkdir bindings\python3\include\tree_sitter\
+          xcopy /R /H /Y src\tree_sitter\parser.h bindings\python3\include\tree_sitter\
+          cd bindings\python3 & python3 setup.py bdist_wheel
+      - name: Cache wheel for distribution
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}-${{ matrix.python-version }}
+          path: bindings/python3/dist/*.whl
+          retention-days: 5
+
   publish:
-    needs: [build-manylinux, build-mac-windows]
+    needs: [build-manylinux, build-mac]
     runs-on: ubuntu-20.04
     steps:
       - name: Fetch wheels from cache

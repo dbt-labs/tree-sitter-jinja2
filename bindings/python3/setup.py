@@ -4,7 +4,7 @@ from setuptools import Extension, setup
 
 setup(
     name="tree-sitter-jinja2",
-    version="0.0.3",
+    version="0.0.4",
     platforms=["any"],
     python_requires=">=3.6",
     packages=["tree_sitter_jinja2"],

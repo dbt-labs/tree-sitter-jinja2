@@ -82,10 +82,10 @@ jobs:
         run: make build LOG=true
       - name: Build bindings
         run: |
-          type src\parser.c > bindings\python3\include\tree_sitter_jinja2.c
+          Move-Item -Path src\parser.c -Destination bindings\python3\include\tree_sitter_jinja2.c
           mkdir bindings\python3\include\tree_sitter\
-          xcopy /R /H /Y src\tree_sitter\parser.h bindings\python3\include\tree_sitter\
-          cd bindings\python3 & python3 setup.py bdist_wheel
+          cp src\tree_sitter\parser.h bindings\python3\include\tree_sitter\
+          cd bindings\python3 && python3 setup.py bdist_wheel
       - name: Cache wheel for distribution
         uses: actions/upload-artifact@v2
         with:

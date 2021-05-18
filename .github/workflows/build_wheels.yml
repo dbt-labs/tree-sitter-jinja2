@@ -53,12 +53,12 @@ jobs:
           path: bindings/python3/dist/*-manylinux*.whl
           retention-days: 5
 
-  build-mac:
+  build-mac-windows:
     needs: [test]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-10.15]
+        os: [macos-10.15, windows-2019]
         python-version: [3.8]
     steps:
       - uses: actions/checkout@v2
@@ -72,7 +72,7 @@ jobs:
           retention-days: 5
 
   publish:
-    needs: [build-manylinux, build-mac]
+    needs: [build-manylinux, build-mac-windows]
     runs-on: ubuntu-20.04
     steps:
       - name: Fetch wheels from cache

@@ -4,16 +4,14 @@ on: [pull_request]
 
 jobs:
 
-  build:
-
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         # commenting out windows and mac for now
         # os: [ubuntu-20.04, macos-10.15, windows-2019]
-        os: [ubuntu-20.04]
-        python-version: [3.6, 3.7, 3.8, 3.9]
-
+        os: [ubuntu-20.04, macos-10.15]
+        python-version: [3.8]
     steps:
       - uses: actions/checkout@v2
       - name: Setup npm
@@ -30,6 +28,36 @@ jobs:
         run: make build LOG=true
       - name: Test tree-sitter
         run: make test LOG=true
+
+  build-manylinux:
+    needs: [test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-10.15]
+        python-version: [3.8]
+    steps:
+      - name: Build manylinux Python wheels
+      uses: RalfG/python-wheels-manylinux-build@v0.3.4-manylinux2010_x86_64
+      with:
+        python-versions: 'cp36-cp36m cp37-cp37m'
+        build-requirements: 'cython numpy'
+        package-path: 'bindings/python3/'
+      - name: Cache wheel for distribution
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}-${{ matrix.python-version }}
+          path: bindings/python3/dist/*.whl
+          retention-days: 5
+
+  build-mac:
+    needs: [test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-10.15]
+        python-version: [3.8]
+    steps:
       - name: Build bindings
         run: make bindings LOG=true
       - name: Cache wheel for distribution
@@ -40,7 +68,7 @@ jobs:
           retention-days: 5
 
   publish:
-    needs: build
+    needs: [build-manylinux, build-mac]
     runs-on: ubuntu-20.04
     steps:
       - name: Fetch wheels from cache

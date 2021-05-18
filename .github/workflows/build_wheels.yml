@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}-${{ matrix.python-version }}
-          path: dist/*.whl
+          path: bindings/python3/dist/*.whl
           retention-days: 5
 
   publish:

@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}-${{ matrix.python-version }}
-          path: bindings/python3/dist/*.whl
+          path: bindings/python3/dist/*-manylinux*.whl
           retention-days: 5
 
   build-mac:

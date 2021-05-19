@@ -16,3 +16,5 @@ bindings/python3/include/tree_sitter/
 bindings/python3/dist
 *.egg-info
 *.whl
+__pycache__/
+*.py[cod]

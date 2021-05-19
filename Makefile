@@ -80,7 +80,7 @@ node_modules/tree-sitter-cli/tree-sitter/:
 .PHONY: install
 install: node_modules/tree-sitter-cli/tree-sitter/
 	$(L)pip install --upgrade pip
-	$(L)pip install wheel setuptools-dso==2.0a1
+	$(L)pip install wheel setuptools-dso==2.0a1 build
 
 # build tree-sitter
 .PHONY: build
@@ -90,12 +90,12 @@ build: install
 # prepare to build bindings
 .PHONY: prebindings
 prebindings: build
-	$(L)$(CAT) src$(PATHSEP)parser.c > bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter_jinja2.c $(CMDSEP) mkdir bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP) $(CMDSEP) $(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
+	$(L)$(CAT) src$(PATHSEP)parser.c > bindings$(PATHSEP)python$(PATHSEP)include$(PATHSEP)parser.c $(CMDSEP) mkdir bindings$(PATHSEP)python$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP) $(CMDSEP) $(CP) src$(PATHSEP)tree_sitter$(PATHSEP)parser.h bindings$(PATHSEP)python$(PATHSEP)include$(PATHSEP)tree_sitter$(PATHSEP)
 
 # build bindings
 .PHONY: bindings
 bindings: prebindings
-	$(L)cd bindings$(PATHSEP)python3 $(CMDSEP) python setup.py bdist_wheel
+	$(L)cd bindings$(PATHSEP)python $(CMDSEP) python -m build --wheel
 
 # runs the tree-sitter unit tests and python unit tests
 .PHONY: test
@@ -118,8 +118,7 @@ clean:
 	$(L)$(call rm_all,*.gyp)
 	$(L)$(RMF) Cargo.toml
 	$(L)$(RMRF) build
-	$(L)$(RMRF) bindings$(PATHSEP)python3$(PATHSEP)include
-	$(L)$(RMRF) bindings$(PATHSEP)python3$(PATHSEP)dist
-	$(L)mkdir bindings$(PATHSEP)python3$(PATHSEP)include
-	$(L)echo # > bindings$(PATHSEP)python3$(PATHSEP)include$(PATHSEP).gitignore
-	
+	$(L)$(RMRF) bindings$(PATHSEP)python$(PATHSEP)include
+	$(L)$(RMRF) bindings$(PATHSEP)python$(PATHSEP)dist
+	$(L)mkdir bindings$(PATHSEP)python$(PATHSEP)include
+	$(L)echo # > bindings$(PATHSEP)python$(PATHSEP)include$(PATHSEP).gitignore

@@ -1,4 +1,4 @@
-# Bindings for Python3
+# Bindings for Python
 
 ## To use the bindings in your project:
 ```

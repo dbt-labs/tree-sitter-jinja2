@@ -11,8 +11,8 @@ class InstallPlatlib(install):
             self.install_lib = self.install_platlib
             
 dso = DSO(
-    'tree-sitter-jinja2-language',
-    [os.path.abspath("include/tree_sitter_jinja2.c")],
+    'tree-sitter-jinja2.language',
+    [os.path.abspath("include/parser.c")],
     include_dirs=[os.path.abspath("include")],
     extra_compile_args=(
         ["-std=c99", "-fPIC"] if system() != "Windows" else None
@@ -20,19 +20,10 @@ dso = DSO(
 )
 
 setup(
-    name="tree-sitter-jinja2",
-    version="0.0.5",
-    python_requires=">=3.6",
-    packages=[
-        "tree_sitter_jinja2",
-    ],
-    install_requires=[
-        'tree_sitter==0.19.0',
-        'setuptools-dso==2.0a1'
-    ],
+    # fixes issue with manylinux build
+    # (https://github.com/bigartm/bigartm/issues/840#issuecomment-342825690)
     cmdclass={'install': InstallPlatlib},
     x_dsos=[dso],
-    zip_safe=False,
     # this forces platform specific wheels
     has_ext_modules=lambda: True
 )

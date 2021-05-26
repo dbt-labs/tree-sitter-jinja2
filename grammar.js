@@ -11,7 +11,7 @@ function sep1(rule, separator) {
 }
 
 module.exports = grammar ({
-  name: 'dbt_jinja',
+  name: 'jinja2',
 
   rules: {
     source_file: $ => repeat(

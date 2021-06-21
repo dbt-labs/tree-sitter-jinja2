@@ -116,7 +116,6 @@ clean:
 	$(L)$(RMRF) build
 	$(L)$(call rm_all,*.wasm)
 	$(L)$(call rm_all,*.gyp)
-	$(L)$(RMF) Cargo.toml
 	$(L)$(RMRF) build
 	$(L)$(RMRF) bindings$(PATHSEP)python$(PATHSEP)include
 	$(L)$(RMRF) bindings$(PATHSEP)python$(PATHSEP)dist

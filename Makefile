@@ -97,7 +97,7 @@ prebindings: build
 bindings: prebindings
 	$(L)cd bindings$(PATHSEP)python $(CMDSEP) python -m build --wheel
 
-# runs the tree-sitter unit tests and python unit tests
+# runs the tree-sitter unit tests
 .PHONY: test
 test: build
 	$(L)npx tree-sitter test

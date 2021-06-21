@@ -1,8 +1,9 @@
 # Bindings for Python
 
 ## To use the bindings in your project:
+
+`requirements.txt`:
 ```
-# requirements.txt
 tree-sitter==0.19.0
 tree-sitter-jinja2
 ```

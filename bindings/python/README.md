@@ -1,4 +1,4 @@
-![](https://github.com/fishtown-analytics/tree-sitter-jinja2/actions/workflows/build_python/badge.svg)
+![](https://github.com/fishtown-analytics/tree-sitter-jinja2/actions/workflows/build_wheels.yml/badge.svg)
 # Bindings for Python
 
 ## To use the bindings in your project:

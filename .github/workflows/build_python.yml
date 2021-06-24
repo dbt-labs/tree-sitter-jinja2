@@ -228,24 +228,24 @@ jobs:
       - name: Install wheel
         run: python -m pip install --find-links dist tree-sitter-jinja2
 
-  publish:
-    needs: [test-wheels, test-sdist]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
-      - name: Fetch dists from cache
-        uses: actions/download-artifact@v2
-      - name: Gather dists
-        run: |
-          mkdir dist/
-          find . -type f \( -name '*.whl' -o -name '*.tar.gz' \) -exec mv -i '{}' ./dist/ ';'
-      - name: Show all dists
-        run: ls -lh dist
-      - run: python -m pip install twine
-      - name: Publish distribution 📦 to Test PyPI
-        env:
-          TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
-        run: python -m twine check dist/* && python -m twine upload --repository-url https://test.pypi.org/legacy/ --non-interactive dist/* --verbose
+  # publish:
+  #   needs: [test-wheels, test-sdist]
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/setup-python@v2
+  #       with:
+  #         python-version: "3.9"
+  #     - name: Fetch dists from cache
+  #       uses: actions/download-artifact@v2
+  #     - name: Gather dists
+  #       run: |
+  #         mkdir dist/
+  #         find . -type f \( -name '*.whl' -o -name '*.tar.gz' \) -exec mv -i '{}' ./dist/ ';'
+  #     - name: Show all dists
+  #       run: ls -lh dist
+  #     - run: python -m pip install twine
+  #     - name: Publish distribution 📦 to Test PyPI
+  #       env:
+  #         TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
+  #         TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
+  #       run: python -m twine check dist/* && python -m twine upload --repository-url https://test.pypi.org/legacy/ --non-interactive dist/* --verbose

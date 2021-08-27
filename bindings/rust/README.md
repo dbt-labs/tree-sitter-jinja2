@@ -3,10 +3,11 @@
 ## To use the bindings in your project:
 
 `Cargo.toml`:
+
 ```
 [dependencies]
 tree-sitter = "0.19"
-tree-sitter-jinja2 = { git = "ssh://git@github.com/fishtown-analytics/tree-sitter-jinja2", branch =" main" }
+tree-sitter-jinja2 = { git = "ssh://git@github.com/dbt-labs/tree-sitter-jinja2", branch =" main" }
 ```
 
 ```rust

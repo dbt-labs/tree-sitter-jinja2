@@ -5,8 +5,11 @@ version = "0.1.0"
 readme = "bindings/rust/README.md"
 keywords = ["incremental", "parsing", "jinja"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/fishtown-analytics/tree-sitter-jinja2"
+homepage = "https://github.com/dbt-labs/tree-sitter-jinja2"
+repository = "https://github.com/dbt-labs/tree-sitter-jinja2"
 edition = "2018"
+publish = false
+license = "Apache-2.0"
 
 build = "bindings/rust/build.rs"
 include = [

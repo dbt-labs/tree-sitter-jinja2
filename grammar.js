@@ -59,11 +59,31 @@ module.exports = grammar ({
     ),
 
     _expr: $ => choice(
+        $.scoped_fn_call,
         $.fn_call,
         $.list,
         $.dict,
         $.lit_string,
         $.bool,
+        $.integer,
+    ),
+    
+    scoped_fn_call: $ => seq(
+        choice(
+            field('fn_scope_name', $.identifier),
+            field('fn_call', $.fn_call)
+        ),
+        '.',
+        field('scoped_fn_call', $._scoped_fn_call)
+    ),
+
+    _scoped_fn_call: $ => choice(
+        field('fn_call', $.fn_call),
+        seq(
+            field('fn_call', $.fn_call),
+            '.',
+            field('scoped_fn_call', $._scoped_fn_call)
+        )
     ),
 
     fn_call: $ => seq(
@@ -144,7 +164,12 @@ module.exports = grammar ({
             '[{][^{%#]' + // match a character that IS `{` and isn't followed by `{`, `%`, or`#`
         ')'             + // end capture group
         '+'               // one or more times. using this instead of * because tree-sitter can hang when matching the empty string.
-    )
+    ),
 
+    // taken from here: https://github.com/tree-sitter/tree-sitter-python/blob/62827156d01c74dc1538266344e788da74536b8a/grammar.js#L1007
+    // allows for integers that start with zero such as 01234
+    integer: $ => token(
+        repeat1(/[0-9]+_?/)
+    )
   }
 });

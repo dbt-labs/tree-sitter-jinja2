@@ -1,0 +1,386 @@
+==================
+Simple metrics call
+==================
+
+select * from {{
+  metricflow.query('revenue_usd')
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (identifier)
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+  )
+)
+
+==================
+Metrics call with more SQL
+==================
+
+select * from {{
+  metricflow.query('revenue_usd')
+}} left join on country
+
+---
+
+(source_file
+  (scoped_fn_call
+    (identifier)
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+  )
+)
+
+==================
+Metrics call with chained function
+==================
+
+select * from {{
+  metricflow.query(
+    metrics=['revenue', Metric('revenue').pctgrowth('yoy')],
+  )
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (identifier)
+    (fn_call
+      (identifier)
+      (argument_list
+        (kwarg
+          (identifier)
+          (list
+            (lit_string)
+            (scoped_fn_call
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+==================
+Metrics call with weird comment
+==================
+
+# metricflow.query(metrics=['revenue', Metric('revenue').pctgrowth('yoy')],)
+select * from {{
+  metricflow.query('revenue_usd')
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (identifier)
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+  )
+)
+
+==================
+Metrics call with weird identifier
+==================
+
+select * from {{
+  metricflow.query('metricflow.query(metrics=[\'revenue\', Metric(\'revenue\').pctgrowth(\'yoy\')],)')
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (identifier)
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+  )
+)
+
+==================
+Metrics call with multiple chained calls
+==================
+
+select * from {{
+  metricflow.query(
+    group_by=['user__country', Dimension('metric_time').grain('day').as('transaction_dt')], 
+  )
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (identifier)
+    (fn_call
+      (identifier)
+      (argument_list
+        (kwarg
+          (identifier)
+          (list
+            (lit_string)
+            (scoped_fn_call
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+==================
+Scoped call chained 5 times
+==================
+
+select * from {{
+  asdf("asdf").asdf("asdf").asdf("asdf").asdf("asdf").asdf("asdf")
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+  )
+)
+
+==================
+Complex metrics call
+==================
+
+select * from {{
+  metricflow.query(
+    metrics=['revenue', Metric('revenue').pctgrowth('yoy')],
+    group_by=['user__country', Dimension('metric_time').grain('day').alias('transaction_dt')], 
+    where='{revenue} > 10 AND {user__country} = "US" AND {transaction_dt} > "2022-10-01"',
+    limit=10, 
+    order_by=['revenue'],
+    explain=True
+  )
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (identifier)
+    (fn_call
+      (identifier)
+      (argument_list
+        (kwarg
+          (identifier)
+          (list
+            (lit_string)
+            (scoped_fn_call
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+            )
+          )
+        )
+        (kwarg
+          (identifier)
+          (list
+            (lit_string)
+            (scoped_fn_call
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+              (fn_call
+                (identifier)
+                (argument_list
+                  (lit_string)
+                )
+              )
+            )
+          )
+        )
+        (kwarg
+          (identifier)
+          (lit_string)
+        )
+        (kwarg
+          (identifier)
+          (integer)
+        )
+        (kwarg
+          (identifier)
+          (list
+            (lit_string)
+          )
+        )
+        (kwarg
+          (identifier)
+          (bool)
+        )
+      )
+    )
+  )
+)
+
+==================
+Scoped fn call fails without scope
+==================
+
+{{
+  .asdf("asdf")
+}}
+
+---
+
+(source_file
+  (ERROR)
+  (fn_call
+    (identifier)
+    (argument_list
+      (lit_string)
+    )
+  )
+)
+
+==================
+Scoped fn call fails without function
+==================
+
+{{
+  asdf("asdf").
+}}
+
+---
+
+(source_file
+  (ERROR
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+  )
+)
+
+==================
+Chaining without intermediate function fails
+==================
+
+{{
+  asdf("asdf").asdf.asdf("asdf")
+}}
+
+---
+
+(source_file
+  (scoped_fn_call
+    (fn_call
+      (identifier)
+      (argument_list
+        (lit_string)
+      )
+    )
+    (fn_call
+      (identifier)
+      (ERROR)
+      (argument_list
+        (lit_string)
+      )
+    )
+  )
+)

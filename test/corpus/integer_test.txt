@@ -1,0 +1,77 @@
+==================
+integer
+==================
+
+{{ 10 }}
+
+---
+
+(source_file
+  (integer)
+)
+
+==================
+string containing integer
+==================
+
+{{ "10" }}
+
+---
+
+(source_file
+  (lit_string)
+)
+
+==================
+floats aren't supported
+==================
+
+{{ 1.0 }}
+
+---
+
+(source_file
+  (ERROR
+    (integer)
+  )
+  (integer)
+)
+
+==================
+negative integers aren't supported
+==================
+
+{{ -1 }}
+
+---
+
+(source_file
+  (ERROR
+    (UNEXPECTED '-')
+  )
+  (integer)
+)
+
+==================
+zero
+==================
+
+{{ 0 }}
+
+---
+
+(source_file
+  (integer)
+)
+
+==================
+integers with leading 0s are supported, based on the tree-sitter-python implementation
+==================
+
+{{ 01234 }}
+
+---
+
+(source_file
+  (integer)
+)

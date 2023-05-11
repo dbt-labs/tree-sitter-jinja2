@@ -110,13 +110,13 @@ jobs:
       matrix:
         tags:
           - version-tag: cp38-cp38
-            python-version: 3.8
+            python-version: "3.8"
           - version-tag: cp39-cp39
-            python-version: 3.9
+            python-version: "3.9"
           - version-tag: cp310-cp310
-            python-version: 3.10
+            python-version: "3.10"
           - version-tag: cp311-cp311
-            python-version: 3.11
+            python-version: "3.11"
 
     steps:
       - name: Checkout Repo
@@ -152,7 +152,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9, 3.10, 3.11]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - name: Checkout Repo
@@ -193,7 +193,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9, 3.10, 3.11]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - name: Checkout Repo
@@ -274,7 +274,7 @@ jobs:
            download_name: macos
          - image_name: windows-latest
            download_name: windows
-        python-version: [3.8, 3.9, 3.10, 3.11]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - name: Checkout Repo

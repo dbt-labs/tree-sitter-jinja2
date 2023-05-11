@@ -104,7 +104,7 @@ jobs:
 
   build-manylinux:
     needs: [generate-language-source]
-    name: Build linux-py${{ matrix.tags.python-version }}
+    name: "Build linux-py${{ matrix.tags.python-version }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -131,7 +131,7 @@ jobs:
       - name: Build manylinux wheels
         uses: RalfG/python-wheels-manylinux-build@v0.7.1-manylinux2010_x86_64
         with:
-          python-versions: ${{ matrix.tags.version-tag }}
+          python-versions: "${{ matrix.tags.version-tag }}"
           package-path: bindings/python/
 
       - name: Copy manylinux wheel files to dist
@@ -143,12 +143,12 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: linux_py${{ matrix.tags.python-version }}
+          name: "linux_py${{ matrix.tags.python-version }}"
           path: dist/
 
   build-macos:
     needs: [generate-language-source]
-    name: Build macos-py${{ matrix.python-version }}
+    name: "Build macos-py${{ matrix.python-version }}"
     runs-on: macos-latest
     strategy:
       matrix:
@@ -161,7 +161,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "${{ matrix.python-version }}"
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
@@ -184,12 +184,12 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: macos_py${{ matrix.python-version }}
+          name: "macos_py${{ matrix.python-version }}"
           path: dist/
 
   build-windows:
     needs: [generate-language-source]
-    name: Build windows-py${{ matrix.python-version }}
+    name: "Build windows-py${{ matrix.python-version }}"
     runs-on: windows-latest
     strategy:
       matrix:
@@ -202,7 +202,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "${{ matrix.python-version }}"
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
@@ -226,7 +226,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: windows_py${{ matrix.python-version }}
+          name: "windows_py${{ matrix.python-version }}"
           path: dist/
 
   test-sdist:

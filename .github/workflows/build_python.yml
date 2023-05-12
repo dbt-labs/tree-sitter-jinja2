@@ -1,3 +1,13 @@
+# **what?**
+# Minimal tests that we can build and install
+#
+# **why?**
+# Ensure it works after PR changes
+#
+# **when?**
+# On every pull request
+#
+
 name: tree-sitter-jinja2
 
 on: [pull_request]
@@ -10,34 +20,46 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: [3.8]
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Setup npm
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+          node-version: '16'
+
+      - name: "Setup Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "${{ matrix.python-version }}"
+
       - name: Test tree-sitter
         run: make test LOG=true
 
   generate-language-source:
-    needs: test
+    needs: [test]
     name: Generate language source files
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Setup npm
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
+
       - name: Install dependencies
         run: npm install
+
       - name: Generate tree-sitter language source
         run: npx tree-sitter generate
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
           name: language_source
           path: src/
@@ -46,155 +68,201 @@ jobs:
     needs: [generate-language-source]
     name: Build sdist
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+
       - name: Download tree-sitter language source
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: language_source
           path: bindings/python/include
+
       - name: Upgrade pip and build
         run: python -m pip install -U pip build
+
       - name: Creating source distribution
         run: python -m build bindings/python --sdist --outdir dist
+
       - name: Show sdist generated
         run: ls -lh dist
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
           name: sdist
           path: dist/
 
   build-manylinux:
     needs: [generate-language-source]
-    name: Build linux-py${{ matrix.tags.python-version }}
+    name: "Build linux-py${{ matrix.tags.python-version }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         tags:
-          - version-tag: cp36-cp36m
-            python-version: 3.6
-          - version-tag: cp37-cp37m
-            python-version: 3.7
           - version-tag: cp38-cp38
-            python-version: 3.8
+            python-version: "3.8"
           - version-tag: cp39-cp39
-            python-version: 3.9
+            python-version: "3.9"
+          - version-tag: cp310-cp310
+            python-version: "3.10"
+          - version-tag: cp311-cp311
+            python-version: "3.11"
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Download tree-sitter language source
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: language_source
           path: bindings/python/include
+
       - name: Build manylinux wheels
-        uses: RalfG/python-wheels-manylinux-build@v0.3.4-manylinux2010_x86_64
+        uses: RalfG/python-wheels-manylinux-build@v0.7.1-manylinux2014_x86_64
         with:
-          python-versions: ${{ matrix.tags.version-tag }}
+          python-versions: "${{ matrix.tags.version-tag }}"
           package-path: bindings/python/
+
       - name: Copy manylinux wheel files to dist
         run: mkdir dist && cp bindings/python/dist/*manylinux*.whl dist/
+
       - name: Show wheels generated
         run: ls -lh dist
-      - uses: actions/upload-artifact@v1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: linux_py${{ matrix.tags.python-version }}
+          name: "linux_py${{ matrix.tags.python-version }}"
           path: dist/
 
   build-macos:
     needs: [generate-language-source]
-    name: Build macos-py${{ matrix.python-version }}
+    name: "Build macos-py${{ matrix.python-version }}"
     runs-on: macos-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "${{ matrix.python-version }}"
+
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+
       - name: Download tree-sitter language source
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: language_source
           path: bindings/python/include
+
       - name: Upgrade pip and build
         run: python -m pip install -U pip build
+
       - name: Generate wheel
         run: python -m build bindings/python --wheel --outdir dist
+
       - name: Show wheels generated
         run: ls -lh dist/
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: macos_py${{ matrix.python-version }}
+          name: "macos_py${{ matrix.python-version }}"
           path: dist/
 
   build-windows:
     needs: [generate-language-source]
-    name: Build windows-py${{ matrix.python-version }}
+    name: "Build windows-py${{ matrix.python-version }}"
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup python
-        uses: actions/setup-python@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "${{ matrix.python-version }}"
+
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+
       - name: Download tree-sitter language
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: language_source
           path: bindings/python/include
+
       - name: Upgrade pip and build
         run: python -m pip install -U pip build
+
       - name: Generate wheel
         run: python -m build bindings/python --wheel --outdir dist
+
       - name: Show wheels generated
         run: ls -lh dist
         shell: bash
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: windows_py${{ matrix.python-version }}
+          name: "windows_py${{ matrix.python-version }}"
           path: dist/
 
   test-sdist:
-    needs: build-sdist
+    needs: [build-sdist]
     name: Test sdist
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Download sdist
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: sdist
           path: dist
+
       - name: Show sdist downloaded
         run: ls -lh dist
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+
       - name: Upgrade pip
         run: python -m pip install -U pip wheel
+
       - name: Install sdist
         run: python -m pip install --find-links dist tree-sitter-jinja2
 
   test-wheels:
-    name: Test ${{ matrix.os.download_name }}-py${{ matrix.python-version }}
+    name: "Test ${{ matrix.os.download_name }}-py${{ matrix.python-version }}"
     needs: [build-manylinux, build-macos, build-windows]
     runs-on: ${{ matrix.os.image_name }}
     strategy:
@@ -206,46 +274,32 @@ jobs:
            download_name: macos
          - image_name: windows-latest
            download_name: windows
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "${{ matrix.python-version }}"
+
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+
       - name: Download wheel(s)
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.os.download_name }}_py${{ matrix.python-version }}
+          name: "${{ matrix.os.download_name }}_py${{ matrix.python-version }}"
           path: dist
+
       - name: Show wheels downloaded
         run: ls -lh dist
         shell: bash
+
       - name: Upgrade pip
         run: python -m pip install -U pip wheel
+
       - name: Install wheel
         run: python -m pip install --find-links dist tree-sitter-jinja2
-
-  # publish:
-  #   needs: [test-wheels, test-sdist]
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/setup-python@v2
-  #       with:
-  #         python-version: "3.9"
-  #     - name: Fetch dists from cache
-  #       uses: actions/download-artifact@v2
-  #     - name: Gather dists
-  #       run: |
-  #         mkdir dist/
-  #         find . -type f \( -name '*.whl' -o -name '*.tar.gz' \) -exec mv -i '{}' ./dist/ ';'
-  #     - name: Show all dists
-  #       run: ls -lh dist
-  #     - run: python -m pip install twine
-  #     - name: Publish distribution 📦 to Test PyPI
-  #       env:
-  #         TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
-  #         TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
-  #       run: python -m twine check dist/* && python -m twine upload --repository-url https://test.pypi.org/legacy/ --non-interactive dist/* --verbose

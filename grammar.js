@@ -64,6 +64,8 @@ module.exports = grammar ({
         $.dict,
         $.lit_string,
         $.bool,
+        $.integer,
+        $.float,
     ),
 
     fn_call: $ => seq(
@@ -144,7 +146,25 @@ module.exports = grammar ({
             '[{][^{%#]' + // match a character that IS `{` and isn't followed by `{`, `%`, or`#`
         ')'             + // end capture group
         '+'               // one or more times. using this instead of * because tree-sitter can hang when matching the empty string.
-    )
+    ),
 
+    integer: $ => token(
+      seq(
+        repeat1(/_?[0-9]+/),
+      )
+    ),
+
+    float: $ => {
+      const digits = repeat1(/[0-9]+_?/);
+      const exponent = seq(/[eE][\+-]?/, digits)
+
+      return token(
+        choice(
+          seq(digits, '.', optional(digits), optional(exponent)),
+          seq(optional(digits), '.', digits, optional(exponent)),
+          seq(digits, exponent)
+        )
+      )
+    },
   }
 });

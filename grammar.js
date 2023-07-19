@@ -150,6 +150,7 @@ module.exports = grammar ({
 
     integer: $ => token(
       seq(
+        optional(/[\+-]/),
         repeat1(/_?[0-9]+/),
       )
     ),
@@ -157,11 +158,12 @@ module.exports = grammar ({
     float: $ => {
       const digits = repeat1(/[0-9]+_?/);
       const exponent = seq(/[eE][\+-]?/, digits)
+      const sign = /[\+-]/
 
       return token(
         choice(
-          seq(digits, '.', optional(digits), optional(exponent)),
-          seq(optional(digits), '.', digits, optional(exponent)),
+          seq(optional(sign), digits, '.', optional(digits), optional(exponent)),
+          seq(optional(sign), optional(digits), '.', digits, optional(exponent)),
           seq(digits, exponent)
         )
       )

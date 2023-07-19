@@ -16,7 +16,15 @@
           "named": true
         },
         {
+          "type": "float",
+          "named": true
+        },
+        {
           "type": "fn_call",
+          "named": true
+        },
+        {
+          "type": "integer",
           "named": true
         },
         {
@@ -117,7 +125,15 @@
             "named": true
           },
           {
+            "type": "float",
+            "named": true
+          },
+          {
             "type": "fn_call",
+            "named": true
+          },
+          {
+            "type": "integer",
             "named": true
           },
           {
@@ -149,7 +165,15 @@
           "named": true
         },
         {
+          "type": "float",
+          "named": true
+        },
+        {
           "type": "fn_call",
+          "named": true
+        },
+        {
+          "type": "integer",
           "named": true
         },
         {
@@ -195,7 +219,15 @@
             "named": true
           },
           {
+            "type": "float",
+            "named": true
+          },
+          {
             "type": "fn_call",
+            "named": true
+          },
+          {
+            "type": "integer",
             "named": true
           },
           {
@@ -227,7 +259,15 @@
           "named": true
         },
         {
+          "type": "float",
+          "named": true
+        },
+        {
           "type": "fn_call",
+          "named": true
+        },
+        {
+          "type": "integer",
           "named": true
         },
         {
@@ -288,6 +328,14 @@
   {
     "type": "]",
     "named": false
+  },
+  {
+    "type": "float",
+    "named": true
+  },
+  {
+    "type": "integer",
+    "named": true
   },
   {
     "type": "{",

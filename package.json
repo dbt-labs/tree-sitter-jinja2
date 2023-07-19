@@ -8,9 +8,9 @@
     "incremental"
   ],
   "dependencies": {
-    "nan": "^2.15.0"
+    "nan": "^2.17.0"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.19.0"
+    "tree-sitter-cli": "0.20.8"
   }
 }

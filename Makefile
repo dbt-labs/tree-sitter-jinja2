@@ -79,7 +79,7 @@ node_modules/tree-sitter-cli/tree-sitter/:
 
 .PHONY: install
 install: node_modules/tree-sitter-cli/tree-sitter/
-	$(L)pip install --upgrade pip
+	$(L)python -m pip install --upgrade pip
 	$(L)pip install wheel setuptools-dso==2.0a1 build
 
 # build tree-sitter

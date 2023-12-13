@@ -1,0 +1,48 @@
+name: 🛠️ Implementation
+description: This is an implementation ticket intended for use by the maintainers of tree-sitter-jinja2
+title: "[<project>] <title>"
+labels: ["user docs"]
+body:
+  - type: markdown
+    attributes:
+      value: This is an implementation ticket intended for use by the maintainers of tree-sitter-jinja2
+  - type: checkboxes
+    attributes:
+      label: Housekeeping
+      description: >
+        A couple friendly reminders:
+          1. Link any blocking issues in the "Blocked on" field under the "Core devs & maintainers" project.
+      options:
+        - label: I am a maintainer of tree-sitter-jinja2
+          required: true
+  - type: textarea
+    attributes:
+      label: Short description
+      description: |
+        Describe the scope of the ticket, a high-level implementation approach and any tradeoffs to consider
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Acceptance criteria
+      description: |
+        What is the definition of done for this ticket? Include any relevant edge cases and/or test cases
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Impact to Other Teams
+      description: |
+        Will this change impact other teams?  Include details of the kinds of changes required (new tests, code changes, related tickets) and _add the relevant `Impact:[team]` label_.
+      placeholder: |
+        Example: This change impacts `dbt-redshift` because the tests will need to be modified.  The `Impact:[Adapter]` label has been added.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Context
+      description: |
+        Provide the "why", motivation, and alternative approaches considered -- linking to previous refinement issues, spikes, docs as appropriate
+          validations:
+    validations:
+      required: false

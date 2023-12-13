@@ -1,6 +1,6 @@
 # Contributing to `tree-sitter-jinja2`
 
-`tree-sitter-jinja2` is a Jinja2 grammar for tree-sitter.  It is currently incomplete.
+`tree-sitter-jinja2` is a Jinja2 grammar for tree-sitter.  At present, the jinja grammar described in this repo is highly simplified and incomplete. It is primarily intended to support dbt-extractor. It may be elaborated in the future.
 
 
 1. [About this document](#about-this-document)
@@ -17,7 +17,7 @@
 
 There are many ways to contribute to the ongoing development of `tree-sitter-jinja2`, such as by participating in discussions and issues. We encourage you to first read our higher-level document: ["Expectations for Open Source Contributors"](https://docs.getdbt.com/docs/contributing/oss-expectations).
 
-The rest of this document serves as a more granular guide for contributing code changes to `tree-sitter-jinja2` (this repository). It is not intended as a guide for using `tree-sitter-jinja2`, and some pieces assume a level of familiarity with Python development (virtualenvs, `pip`, etc) and Rust. Specific code snippets in this guide assume you are using macOS or Linux and are comfortable with the command line.
+The rest of this document serves as a more granular guide for contributing code changes to `tree-sitter-jinja2` (this repository). It is not intended as a guide for using `tree-sitter-jinja2`, and some pieces assume a level of familiarity with Python development (virtualenvs, `pip`, etc), JavaScript, and Node.js. Specific code snippets in this guide assume you are using macOS or Linux and are comfortable with the command line.
 
 ### Notes
 
@@ -45,20 +45,16 @@ If you are not a member of the `dbt-labs` GitHub organization, you can contribut
 
 If you are a member of the `dbt-labs` GitHub organization, you will have push access to the `tree-sitter-jinja2` repo. Rather than forking `tree-sitter-jinja2` to make your changes, just clone the repository, check out a new branch, and push directly to that branch.
 
-## Setting up an environment
+## Building `tree-sitter-jinja2`
 
-TBD
+### Requirements
+
+In order to build `tree-sitter-jinja2`, you will need to have Python 3 and Node.js installed.
 
 
-## Running `tree-sitter-jinja2` in development
+### Building `tree-sitter-jinja2`
 
-### Installation
-
-TBD
-
-### Running `tree-sitter-jinja2`
-
-TBD
+Once you have the requirements installed, you can move to the repo root directory and run the command `make build` to convert the grammar description into parser source code. The build output is C source code which can be found in the `src` subdirectory.
 
 ## Testing
 
@@ -67,22 +63,43 @@ Once you're able to manually test that your code change is working as expected, 
 - Your code changes can handle all known edge cases
 - The functionality you're adding will _keep_ working in the future
 
-
-### Initial setup
-
-TBD
-
 ### Test commands
 
-TBD
+In the repo root directory, run the command `make test` to run the unit tests.
+
+### Test 
+
+Tests are defined by plain text files located in `tree-sitter-jinja2/tests/corpus`. A test file contains a sequence of named test cases, each with a jinja block and expected parse tree.
+
+For example, the following test case will appear in test output as `dict with bools`. It parses a jinja source file consisting of a block containing a simple dict. The resulting parse tree is compared to the expected parse tree defined below the jinja as an S-expression. If the actual parse tree matches the expected parse tree, the test passes.
+
+```
+==================
+dict with bools
+==================
+
+{{ {'x':True, 'y': False} }}
+
+---
+
+(source_file
+  (dict
+    (pair 
+      (lit_string)
+      (bool)
+    )
+    (pair 
+      (lit_string)
+      (bool)
+    )
+  )
+)
+```
 
 ## Debugging
 
-TBD
+See the tree-sitter documentation for information about debugging a grammar.
 
-### Assorted development tips
-
-TBD
 
 ## Submitting a Pull Request
 

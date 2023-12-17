@@ -7,7 +7,7 @@
 ```
 [dependencies]
 tree-sitter = "0.19"
-tree-sitter-jinja2 = { git = "ssh://git@github.com/dbt-labs/tree-sitter-jinja2", branch =" main" }
+tree-sitter-jinja2 = { git = "ssh://git@github.com/dbt-labs/tree-sitter-jinja2", branch = "main" }
 ```
 
 ```rust

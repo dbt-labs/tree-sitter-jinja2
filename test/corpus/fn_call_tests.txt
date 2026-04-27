@@ -6,14 +6,13 @@ select * from {{ ref('my_table') }}
 
 ---
 
-(source_file 
+(source_file
+  (text)
   (fn_call
-    (identifier) 
+    (identifier)
     (argument_list
-      (lit_string)
-    )
-  )
-)
+      (lit_string)))
+  (text))
 
 ==================
 Ref with bare words fails
@@ -23,16 +22,14 @@ select * from {{ ref(not_a_string) }}
 
 ---
 
-(source_file 
+(source_file
+  (text)
   (fn_call
     (identifier)
     (argument_list
       (ERROR
-        (identifier)
-      )
-    )
-  )
-)
+        (identifier))))
+  (text))
 
 ==================
 Config with one kwarg
@@ -48,11 +45,8 @@ Config with one kwarg
     (argument_list
       (kwarg
         (identifier)
-        (lit_string)
-      )
-    )
-  )
-)
+        (lit_string))))
+  (text))
 
 ==================
 Config with two kwargs
@@ -68,15 +62,11 @@ Config with two kwargs
     (argument_list
       (kwarg
         (identifier)
-        (lit_string)
-      )
+        (lit_string))
       (kwarg
         (identifier)
-        (lit_string)
-      )
-    )
-  )
-)
+        (lit_string))))
+  (text))
 
 ==================
 Fn with a kwarg, string lit, list, and dict
@@ -97,22 +87,16 @@ Fn with a kwarg, string lit, list, and dict
     (argument_list
       (kwarg
         (identifier)
-        (lit_string)
-      )
+        (lit_string))
       (lit_string)
       (dict
         (pair
           (lit_string)
-          (lit_string)
-        )
-      )
+          (lit_string)))
       (list
         (lit_string)
-        (lit_string)
-      )
-    )
-  )
-)
+        (lit_string))))
+  (text))
 
 ==================
 parses other fn names
@@ -122,12 +106,11 @@ parses other fn names
 
 ---
 
-(source_file 
+(source_file
   (fn_call
-    (identifier) 
-    (argument_list)
-  )
-)
+    (identifier)
+    (argument_list))
+  (text))
 
 ==================
 buried fn names
@@ -143,19 +126,17 @@ join {{ ref('y') }}
 ---
 
 (source_file
+  (text)
   (fn_call
     (identifier)
     (argument_list
-      (lit_string)
-    )
-  ) 
-  (fn_call 
+      (lit_string)))
+  (text)
+  (fn_call
     (identifier)
     (argument_list
-      (lit_string)
-    )
-  )
-)
+      (lit_string)))
+  (text))
 
 ==================
 bool args
@@ -166,13 +147,11 @@ bool args
 ---
 
 (source_file
-  (fn_call 
+  (fn_call
     (identifier)
-    (argument_list 
-      (bool)
-    )
-  )
-)
+    (argument_list
+      (bool)))
+  (text))
 
 ==================
 bool kwargs
@@ -183,16 +162,13 @@ bool kwargs
 ---
 
 (source_file
-  (fn_call 
+  (fn_call
     (identifier)
-    (argument_list 
+    (argument_list
       (kwarg
         (identifier)
-        (bool)
-      )
-    )
-  )
-)
+        (bool))))
+  (text))
 
 ==================
 True is an invalid fn name
@@ -204,6 +180,4 @@ True is an invalid fn name
 
 (source_file
   (ERROR
-    (bool)
-  )
-)
+    (bool)))

@@ -8,9 +8,7 @@ bare words fail
 
 (source_file
   (ERROR
-    (identifier)
-  )
-)
+    (identifier)))
 
 ==================
 multiple jinja calls
@@ -21,12 +19,13 @@ some text {{ 'floating lit' }} more text {{ config() }} text.
 ---
 
 (source_file
+  (text)
   (lit_string)
+  (text)
   (fn_call
     (identifier)
-    (argument_list)
-  )
-)
+    (argument_list))
+  (text))
 
 ==================
 text with curlys works
@@ -36,11 +35,13 @@ some curlys { }
 
 ---
 
-(source_file)
+(source_file
+  (text))
 
 ==================
 doesn't hang on the empty string
 ==================
+
 ---
 
 (source_file)
@@ -56,7 +57,5 @@ unclosed jinja calls fail
 (source_file
   (fn_call
     (identifier)
-    (argument_list)
-  )
-  (MISSING "}}")
-)
+    (argument_list))
+  (MISSING "}}"))

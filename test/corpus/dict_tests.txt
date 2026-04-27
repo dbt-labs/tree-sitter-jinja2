@@ -8,19 +8,15 @@ floating dict
 
 (source_file
   (dict
-    (pair 
+    (pair
       (lit_string)
+      (lit_string))
+    (pair
       (lit_string)
-    )
-    (pair 
-      (lit_string)
-      (list 
+      (list
         (lit_string)
-        (lit_string)
-      )
-    )
-  )
-)
+        (lit_string))))
+  (text))
 
 ==================
 dict as arg
@@ -36,14 +32,10 @@ dict as arg
     (argument_list
       (lit_string)
       (dict
-        (pair 
+        (pair
           (lit_string)
-          (lit_string)
-        )
-      )
-    )
-  )
-)
+          (lit_string)))))
+  (text))
 
 ==================
 proper config call
@@ -62,13 +54,8 @@ proper config call
         (dict
           (pair
             (lit_string)
-            (lit_string)
-          )
-        )
-      )
-    )
-  )
-)
+            (lit_string))))))
+  (text))
 
 ==================
 dict spread over lines
@@ -85,14 +72,11 @@ dict spread over lines
   (dict
     (pair
       (lit_string)
-      (lit_string)
-    )
+      (lit_string))
     (pair
       (lit_string)
-      (list)
-    )
-  )
-)
+      (list)))
+  (text))
 
 ==================
 dict with bools
@@ -104,13 +88,10 @@ dict with bools
 
 (source_file
   (dict
-    (pair 
+    (pair
       (lit_string)
-      (bool)
-    )
-    (pair 
+      (bool))
+    (pair
       (lit_string)
-      (bool)
-    )
-  )
-)
+      (bool)))
+  (text))

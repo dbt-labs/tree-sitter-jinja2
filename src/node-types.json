@@ -245,6 +245,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -280,6 +281,10 @@
         },
         {
           "type": "lit_string",
+          "named": true
+        },
+        {
+          "type": "text",
           "named": true
         }
       ]
@@ -335,6 +340,10 @@
   },
   {
     "type": "integer",
+    "named": true
+  },
+  {
+    "type": "text",
     "named": true
   },
   {

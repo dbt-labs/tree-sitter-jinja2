@@ -9,9 +9,11 @@ only jinja syntax in top-level quotes is parsed
 ---
 
 (source_file
+  (text)
   (lit_string)
+  (text)
   (lit_string)
-)
+  (text))
 
 ==================
 python string escapes work
@@ -25,7 +27,7 @@ python string escapes work
 (source_file
   (lit_string)
   (lit_string)
-)
+  (text))
 
 ==================
 the kind of quotes you use don't matter
@@ -39,4 +41,4 @@ the kind of quotes you use don't matter
 (source_file
   (lit_string)
   (lit_string)
-)
+  (text))

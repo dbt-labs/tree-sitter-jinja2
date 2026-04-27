@@ -8,7 +8,10 @@ select * from other_table
 
 ---
 
-(source_file (jinja_expression))
+(source_file
+  (text)
+  (jinja_expression)
+  (text))
 
 ==================
 ignores valid syntax in a jinja expression
@@ -18,8 +21,9 @@ ignores valid syntax in a jinja expression
 
 ---
 
-(source_file (jinja_expression))
-
+(source_file
+  (jinja_expression)
+  (text))
 
 ==================
 finds nested jinja expression
@@ -43,18 +47,15 @@ other as (
     (argument_list
       (kwarg
         (identifier)
-        (lit_string)
-      )
-    )
-  )
+        (lit_string))))
+  (text)
   (fn_call
     (identifier)
     (argument_list
-      (lit_string)
-    )
-  )
+      (lit_string)))
+  (text)
   (jinja_expression)
-)
+  (text))
 
 ==================
 jinja expression recognized over multiple line breaks
@@ -66,7 +67,9 @@ expression
 
 ---
 
-(source_file (jinja_expression))
+(source_file
+  (jinja_expression)
+  (text))
 
 ==================
 not a jinja expression
@@ -76,6 +79,5 @@ not a jinja expression
 
 ---
 
-(source_file 
-  (ERROR)
-)
+(source_file
+  (ERROR))

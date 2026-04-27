@@ -10,7 +10,7 @@ comments around jinja
 
 (source_file
   (bool)
-)
+  (text))
 
 ==================
 empty comment
@@ -24,7 +24,7 @@ empty comment
 
 (source_file
   (bool)
-)
+  (text))
 
 ==================
 wild comment formatting
@@ -41,7 +41,7 @@ wild comment formatting
 (source_file
   (bool)
   (bool)
-)
+  (text))
 
 ==================
 wild comment formatting
@@ -51,7 +51,8 @@ wild comment formatting
 
 ---
 
-(source_file)
+(source_file
+  (text))
 
 ==================
 text ending in a bracket fails
@@ -60,4 +61,6 @@ I'd like this to work, but it doesn't rn and this test
 makes a note of that {
 ---
 
-(source_file (ERROR))
+(source_file
+  (text)
+  (ERROR))

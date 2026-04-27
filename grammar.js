@@ -19,7 +19,7 @@ module.exports = grammar ({
             $._jinja_value,
             $.jinja_expression,
             $._jinja_comment,
-            $._text
+            $.text
         )
     ),
 
@@ -139,7 +139,7 @@ module.exports = grammar ({
     ),
 
     // matches everything but jinja
-    _text: $ => new RegExp(
+    text: $ => new RegExp(
         '('             + // capture group
             '[^{]'      + // match any character that is not `{`
             '|'         + // or

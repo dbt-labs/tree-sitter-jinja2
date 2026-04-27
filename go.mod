@@ -1,4 +1,4 @@
-module github.com/bennypowers/tree-sitter-jinja2/bindings/go
+module github.com/bennypowers/tree-sitter-jinja2
 
 go 1.23
 

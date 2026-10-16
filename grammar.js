@@ -59,6 +59,7 @@ module.exports = grammar ({
     ),
 
     _expr: $ => choice(
+        $.identifier,
         $.fn_call,
         $.list,
         $.dict,

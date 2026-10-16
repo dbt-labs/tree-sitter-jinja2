@@ -1,0 +1,134 @@
+==================
+bare variable
+==================
+
+{{bucket}}
+
+---
+
+(source_file
+  (identifier)
+)
+
+==================
+quoted SQL template
+==================
+
+CREATE EXTERNAL TABLE t(`a` string, `b` array<string>)
+PARTITIONED BY (`p` string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'
+STORED AS INPUTFORMAT 'x' OUTPUTFORMAT 'y'
+LOCATION 's3://{{bucket}}/t/'
+TBLPROPERTIES ('k'='v');
+
+---
+
+(source_file
+  (identifier)
+)
+
+==================
+nested call with variable
+==================
+
+{{ outer(inner(bucket), suffix=region) }}
+
+---
+
+(source_file
+  (fn_call
+    (identifier)
+    (argument_list
+      (fn_call
+        (identifier)
+        (argument_list
+          (identifier)
+        )
+      )
+      (kwarg
+        (identifier)
+        (identifier)
+      )
+    )
+  )
+)
+
+==================
+nested containers with variables
+==================
+
+{{ [{'bucket': bucket}, [region, 3]] }}
+
+---
+
+(source_file
+  (list
+    (dict
+      (pair
+        (lit_string)
+        (identifier)
+      )
+    )
+    (list
+      (identifier)
+      (integer)
+    )
+  )
+)
+
+==================
+mixed literal and variable arguments
+==================
+
+{{ config(bucket, True, False, 'literal', 1, 1.5) }}
+
+---
+
+(source_file
+  (fn_call
+    (identifier)
+    (argument_list
+      (identifier)
+      (bool)
+      (bool)
+      (lit_string)
+      (integer)
+      (float)
+    )
+  )
+)
+
+==================
+multiple SQL placeholders
+==================
+
+SELECT '{{bucket}}' AS a, '{{region}}' AS b
+
+---
+
+(source_file
+  (identifier)
+  (identifier)
+)
+
+==================
+whitespace variable
+==================
+
+{{ _bucket42 }}
+
+---
+
+(source_file
+  (identifier)
+)
+
+==================
+raw invalid SQL remains text
+==================
+
+CREATE EXTERNAL TABLE ; ROW FORMAT SERDE ;
+
+---
+
+(source_file)

@@ -24,6 +24,10 @@
           "named": true
         },
         {
+          "type": "identifier",
+          "named": true
+        },
+        {
           "type": "integer",
           "named": true
         },
@@ -133,6 +137,10 @@
             "named": true
           },
           {
+            "type": "identifier",
+            "named": true
+          },
+          {
             "type": "integer",
             "named": true
           },
@@ -170,6 +178,10 @@
         },
         {
           "type": "fn_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -227,6 +239,10 @@
             "named": true
           },
           {
+            "type": "identifier",
+            "named": true
+          },
+          {
             "type": "integer",
             "named": true
           },
@@ -264,6 +280,10 @@
         },
         {
           "type": "fn_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {

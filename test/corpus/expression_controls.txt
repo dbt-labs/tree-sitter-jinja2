@@ -1,0 +1,190 @@
+==================
+nested calls
+==================
+
+{{ outer(inner('literal'), suffix='value') }}
+
+---
+
+(source_file
+  (fn_call
+    (identifier)
+    (argument_list
+      (fn_call
+        (identifier)
+        (argument_list
+          (lit_string)
+        )
+      )
+      (kwarg
+        (identifier)
+        (lit_string)
+      )
+    )
+  )
+)
+
+==================
+literal containers
+==================
+
+{{ [{'bucket': 'fixed'}, [True, 3]] }}
+
+---
+
+(source_file
+  (list
+    (dict
+      (pair
+        (lit_string)
+        (lit_string)
+      )
+    )
+    (list
+      (bool)
+      (integer)
+    )
+  )
+)
+
+==================
+integer sign
+==================
+
+{{ -12 }}
+
+---
+
+(source_file
+  (integer)
+)
+
+==================
+arithmetic not supported
+==================
+
+{{ 1 + 2 }}
+
+---
+
+(source_file
+  (ERROR
+    (integer)
+    (UNEXPECTED ' ')
+  )
+  (integer)
+)
+
+==================
+variable arithmetic not supported
+==================
+
+{{ bucket + 2 }}
+
+---
+
+(source_file
+  (ERROR
+    (identifier)
+    (UNEXPECTED ' ')
+  )
+  (integer)
+)
+
+==================
+property access not supported
+==================
+
+{{ config.bucket }}
+
+---
+
+(source_file
+  (ERROR
+    (identifier)
+    (UNEXPECTED 'b')
+  )
+  (identifier)
+)
+
+==================
+filter not supported
+==================
+
+{{ bucket | upper }}
+
+---
+
+(source_file
+  (ERROR
+    (identifier)
+    (UNEXPECTED '|')
+  )
+  (identifier)
+)
+
+==================
+missing close
+==================
+
+{{ bucket
+
+---
+
+(source_file
+  (identifier)
+  (MISSING "}}")
+)
+
+==================
+unclosed call
+==================
+
+{{ outer(bucket }}
+
+---
+
+(source_file
+  (fn_call
+    (identifier)
+    (argument_list
+      (identifier)
+      (MISSING ")")
+    )
+  )
+)
+
+==================
+unclosed container
+==================
+
+{{ [bucket, {'key': region] }}
+
+---
+
+(source_file
+  (list
+    (identifier)
+    (dict
+      (pair
+        (lit_string)
+        (identifier)
+      )
+      (MISSING "}")
+    )
+  )
+)
+
+==================
+incomplete expression
+==================
+
+{{ }}
+
+---
+
+(source_file
+  (bool
+    (MISSING "True")
+  )
+)
